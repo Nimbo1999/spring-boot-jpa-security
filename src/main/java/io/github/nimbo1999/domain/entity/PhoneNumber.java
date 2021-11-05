@@ -15,11 +15,15 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.github.nimbo1999.domain.enums.PhoneType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "phone_numbers")
 public class PhoneNumber {

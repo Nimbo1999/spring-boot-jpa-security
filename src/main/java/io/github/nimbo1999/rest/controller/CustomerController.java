@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.nimbo1999.domain.entity.Customer;
+import io.github.nimbo1999.rest.dto.CreateCustomerDTO;
 import io.github.nimbo1999.service.CustomerService;
 import io.github.nimbo1999.service.impl.CustomerServiceImpl;
 
@@ -24,8 +25,8 @@ public class CustomerController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Customer saveCustomer(@RequestBody Customer customer) {
-        return service.saveCustomer(customer);
+    public Customer saveCustomer(@RequestBody CreateCustomerDTO createCustomerDTO) {
+        return service.saveCustomer(createCustomerDTO);
     }
 
 }
