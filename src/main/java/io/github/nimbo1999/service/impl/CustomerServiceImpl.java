@@ -13,7 +13,7 @@ import io.github.nimbo1999.domain.entity.Email;
 import io.github.nimbo1999.domain.repository.CustomerRepository;
 import io.github.nimbo1999.domain.repository.PhoneNumberRepository;
 import io.github.nimbo1999.domain.repository.EmailRepository;
-import io.github.nimbo1999.rest.dto.CreateCustomerDTO;
+import io.github.nimbo1999.rest.dto.CustomerDTO;
 import io.github.nimbo1999.rest.dto.assembler.CustomerAssembler;
 import io.github.nimbo1999.rest.dto.assembler.PhoneNumberAssembler;
 import io.github.nimbo1999.rest.dto.assembler.EmailAssembler;
@@ -24,13 +24,13 @@ import lombok.AllArgsConstructor;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    private CustomerRepository repository;
-    private PhoneNumberRepository phoneNumberRepository;
-    private EmailRepository emailRepository;
+    private final CustomerRepository repository;
+    private final PhoneNumberRepository phoneNumberRepository;
+    private final EmailRepository emailRepository;
 
     @Override
     @Transactional
-    public Customer saveCustomer(CreateCustomerDTO createCustomerDTO) {
+    public Customer saveCustomer(CustomerDTO createCustomerDTO) {
         Customer customer = repository.save(new CustomerAssembler().apply(createCustomerDTO));
 
         List<PhoneNumber> phoneNumbers = new PhoneNumberAssembler()

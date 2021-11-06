@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.nimbo1999.domain.entity.Customer;
-import io.github.nimbo1999.rest.dto.CreateCustomerDTO;
+import io.github.nimbo1999.rest.dto.CustomerDTO;
 import io.github.nimbo1999.rest.dto.PersistedCustomerResponseDTO;
 import io.github.nimbo1999.rest.dto.assembler.PersistedCustomerResponseAssembler;
 import io.github.nimbo1999.rest.dto.assembler.PersistedCustomerListResponseAssembler;
@@ -23,7 +23,7 @@ import io.github.nimbo1999.service.impl.CustomerServiceImpl;
 @RequestMapping("/customer")
 public class CustomerController {
 
-    private CustomerService service;
+    private final CustomerService service;
 
     public CustomerController(CustomerServiceImpl service) {
         this.service = service;
@@ -31,7 +31,7 @@ public class CustomerController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public PersistedCustomerResponseDTO saveCustomer(@RequestBody CreateCustomerDTO createCustomerDTO) {
+    public PersistedCustomerResponseDTO saveCustomer(@RequestBody CustomerDTO createCustomerDTO) {
         Customer persistedCustomer = service.saveCustomer(createCustomerDTO);
         return new PersistedCustomerResponseAssembler()
             .apply(persistedCustomer);

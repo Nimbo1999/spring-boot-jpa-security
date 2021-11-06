@@ -5,19 +5,19 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.github.nimbo1999.domain.entity.PhoneNumber;
-import io.github.nimbo1999.rest.dto.CreatePhoneNumberDTO;
+import io.github.nimbo1999.rest.dto.PhoneNumberDTO;
 import io.github.nimbo1999.utils.StringUtils;
 
-public class PhoneNumberAssembler implements Function<List<CreatePhoneNumberDTO>, List<PhoneNumber>> {
+public class PhoneNumberAssembler implements Function<List<PhoneNumberDTO>, List<PhoneNumber>> {
 
     @Override
-    public List<PhoneNumber> apply(List<CreatePhoneNumberDTO> createPhoneNumberDTO) {
+    public List<PhoneNumber> apply(List<PhoneNumberDTO> createPhoneNumberDTO) {
         return createPhoneNumberDTO.stream()
             .map(phoneDTO -> convert(phoneDTO))
             .collect(Collectors.toList());
     }
 
-    private PhoneNumber convert(CreatePhoneNumberDTO createPhoneNumberDTO) {
+    private PhoneNumber convert(PhoneNumberDTO createPhoneNumberDTO) {
         String formattedPhoneNumber = StringUtils.removeNonDigits(createPhoneNumberDTO.getNumber());
 
         return PhoneNumber.builder()

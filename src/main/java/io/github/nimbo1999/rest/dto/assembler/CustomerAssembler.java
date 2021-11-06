@@ -4,13 +4,13 @@ import java.util.function.Function;
 
 import io.github.nimbo1999.domain.entity.Address;
 import io.github.nimbo1999.domain.entity.Customer;
-import io.github.nimbo1999.rest.dto.CreateCustomerDTO;
+import io.github.nimbo1999.rest.dto.CustomerDTO;
 import io.github.nimbo1999.utils.StringUtils;
 
-public class CustomerAssembler implements Function<CreateCustomerDTO, Customer> {
+public class CustomerAssembler implements Function<CustomerDTO, Customer> {
 
     @Override
-    public Customer apply(CreateCustomerDTO createCustomerDTO) {
+    public Customer apply(CustomerDTO createCustomerDTO) {
         Address customerAddress = new AddressAssembler().apply(createCustomerDTO.getAddress());
 
         String formattedCpf = StringUtils.removeNonDigits(createCustomerDTO.getCpf());

@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateCustomerDTO {
+public class CustomerDTO {
     private String name;
     private String cpf;
-    private CreateAddressDTO address;
-    private List<CreatePhoneNumberDTO> phones;
-    private List<CreateEmailDTO> emails;
+    private AddressDTO address;
+    private List<PhoneNumberDTO> phones;
+    private List<EmailDTO> emails;
 }

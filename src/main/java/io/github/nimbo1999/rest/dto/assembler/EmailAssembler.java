@@ -5,18 +5,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.github.nimbo1999.domain.entity.Email;
-import io.github.nimbo1999.rest.dto.CreateEmailDTO;
+import io.github.nimbo1999.rest.dto.EmailDTO;
 
-public class EmailAssembler implements Function<List<CreateEmailDTO>, List<Email>> {
+public class EmailAssembler implements Function<List<EmailDTO>, List<Email>> {
  
     @Override
-    public List<Email> apply(List<CreateEmailDTO> createEmailDTO) {
+    public List<Email> apply(List<EmailDTO> createEmailDTO) {
         return createEmailDTO.stream()
             .map(emailDTO -> convert(emailDTO))
             .collect(Collectors.toList());
     }
 
-    private Email convert(CreateEmailDTO createEmailDTO) {
+    private Email convert(EmailDTO createEmailDTO) {
         return Email.builder()
             .email(createEmailDTO.getEmail())
             .build();
