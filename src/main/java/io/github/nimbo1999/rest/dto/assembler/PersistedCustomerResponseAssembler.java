@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import io.github.nimbo1999.domain.enums.MaskType;
+import io.github.nimbo1999.domain.enums.PhoneType;
 import io.github.nimbo1999.rest.dto.PersistedCustomerResponseDTO;
 import io.github.nimbo1999.rest.dto.PersistedCustomerAddressDTO;
 import io.github.nimbo1999.rest.dto.PersistedCustomerPhoneNumbersDTO;
@@ -12,6 +14,7 @@ import io.github.nimbo1999.domain.entity.Customer;
 import io.github.nimbo1999.domain.entity.Email;
 import io.github.nimbo1999.domain.entity.PhoneNumber;
 import io.github.nimbo1999.domain.entity.Address;
+import io.github.nimbo1999.utils.StringUtils;
 
 public class PersistedCustomerResponseAssembler implements Function<Customer, PersistedCustomerResponseDTO> {
 
@@ -23,7 +26,7 @@ public class PersistedCustomerResponseAssembler implements Function<Customer, Pe
         return PersistedCustomerResponseDTO.builder()
             .id(customer.getId())
             .name(customer.getName())
-            .cpf(customer.getCpf())
+            .cpf(StringUtils.getStringMask(customer.getCpf(), MaskType.CPF))
             .address(persistedAddress)
             .phones(persistedPhoneNumbers)
             .emails(persistedEmails)
@@ -32,7 +35,7 @@ public class PersistedCustomerResponseAssembler implements Function<Customer, Pe
 
     private PersistedCustomerAddressDTO getAddress(Address address) {
         return PersistedCustomerAddressDTO.builder()
-            .postalCode(address.getPostalCode())
+            .postalCode(StringUtils.getStringMask(address.getPostalCode(), MaskType.POSTALCODE))
             .publicPlace(address.getPublicPlace())
             .neighborhood(address.getNeighborhood())
             .city(address.getCity())
@@ -48,8 +51,12 @@ public class PersistedCustomerResponseAssembler implements Function<Customer, Pe
     }
 
     private PersistedCustomerPhoneNumbersDTO convertPhoneNumber(PhoneNumber phoneNumber) {
+        MaskType maskType = phoneNumber.getType() == PhoneType.CELL_PHONE
+            ? MaskType.CELL_PHONE
+            : MaskType.RESIDENTIAL_PHONE;
+
         return PersistedCustomerPhoneNumbersDTO.builder()
-            .number(phoneNumber.getNumber())
+            .number(StringUtils.getStringMask(phoneNumber.getNumber(), maskType))
             .type(phoneNumber.getType().name())
             .build();
     }
