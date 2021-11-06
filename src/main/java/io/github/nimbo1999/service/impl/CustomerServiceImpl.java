@@ -66,5 +66,10 @@ public class CustomerServiceImpl implements CustomerService {
         email.setCustomer(customer);
         return emailRepository.save(email);
     }
+
+    @Override
+    public List<Customer> listCustomers() {
+        return repository.findAll();
+    }
     
 }
