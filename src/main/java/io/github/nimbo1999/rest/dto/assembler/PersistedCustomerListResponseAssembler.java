@@ -6,7 +6,6 @@ import java.util.function.Function;
 
 import io.github.nimbo1999.domain.entity.Customer;
 import io.github.nimbo1999.rest.dto.PersistedCustomerResponseDTO;
-import io.github.nimbo1999.rest.dto.assembler.PersistedCustomerResponseAssembler;
 
 public class PersistedCustomerListResponseAssembler implements Function<List<Customer>, List<PersistedCustomerResponseDTO>> {
 
