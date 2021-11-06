@@ -9,11 +9,14 @@ import org.springframework.stereotype.Service;
 
 import io.github.nimbo1999.domain.entity.Customer;
 import io.github.nimbo1999.domain.entity.PhoneNumber;
+import io.github.nimbo1999.domain.entity.Email;
 import io.github.nimbo1999.domain.repository.CustomerRepository;
 import io.github.nimbo1999.domain.repository.PhoneNumberRepository;
+import io.github.nimbo1999.domain.repository.EmailRepository;
 import io.github.nimbo1999.rest.dto.CreateCustomerDTO;
 import io.github.nimbo1999.rest.dto.assembler.CustomerAssembler;
 import io.github.nimbo1999.rest.dto.assembler.PhoneNumberAssembler;
+import io.github.nimbo1999.rest.dto.assembler.EmailAssembler;
 import io.github.nimbo1999.service.CustomerService;
 import lombok.AllArgsConstructor;
 
@@ -23,18 +26,21 @@ public class CustomerServiceImpl implements CustomerService {
 
     private CustomerRepository repository;
     private PhoneNumberRepository phoneNumberRepository;
+    private EmailRepository emailRepository;
 
     @Override
     @Transactional
     public Customer saveCustomer(CreateCustomerDTO createCustomerDTO) {
-        List<PhoneNumber> phoneNumbers = new PhoneNumberAssembler()
-            .apply(createCustomerDTO.getPhones());
-
         Customer customer = repository.save(new CustomerAssembler().apply(createCustomerDTO));
 
+        List<PhoneNumber> phoneNumbers = new PhoneNumberAssembler()
+            .apply(createCustomerDTO.getPhones());
         List<PhoneNumber> persistedPhones = persistCustomerPhones(phoneNumbers, customer);
-
         customer.setPhones(persistedPhones);
+
+        List<Email> emails = new EmailAssembler().apply(createCustomerDTO.getEmails());
+        List<Email> persistedEmails = persistCustomerEmails(emails, customer);
+        customer.setEmails(persistedEmails);
 
         return customer;
     }
@@ -48,6 +54,17 @@ public class CustomerServiceImpl implements CustomerService {
     private PhoneNumber saveCustomerPhoneNumber(PhoneNumber phoneNumber, Customer customer) {
         phoneNumber.setCustomer(customer);
         return phoneNumberRepository.save(phoneNumber);
+    }
+
+    private List<Email> persistCustomerEmails(List<Email> emails, Customer customer) {
+        return emails.stream()
+            .map(email -> saveCustomerEmail(email, customer))
+            .collect(Collectors.toList());
+    }
+
+    private Email saveCustomerEmail(Email email, Customer customer) {
+        email.setCustomer(customer);
+        return emailRepository.save(email);
     }
     
 }

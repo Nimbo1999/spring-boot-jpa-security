@@ -12,4 +12,4 @@ CREATE DATABASE challenge OWNER postgres;<br><br>
 
 ## Docker
 
-```docker run --name postgres-c -p 5432:5432 -e POSTGRES_PASSWORD=$NIMBO_CORE_POSTGRES_PASSWORD -d postgres```
+```docker run --name postgres-c -p 5432:5432 -e POSTGRES_PASSWORD=$CHALLENGE_POSTGRES_PASSWORD -d postgres```
