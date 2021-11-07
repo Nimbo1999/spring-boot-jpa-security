@@ -22,10 +22,11 @@ import io.github.nimbo1999.rest.dto.assembler.CustomerAssembler;
 import io.github.nimbo1999.rest.dto.assembler.PhoneNumberAssembler;
 import io.github.nimbo1999.rest.dto.assembler.EmailAssembler;
 import io.github.nimbo1999.service.CustomerService;
-import lombok.AllArgsConstructor;
+import io.github.nimbo1999.exceptions.NotFoundException;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository repository;
@@ -81,6 +82,14 @@ public class CustomerServiceImpl implements CustomerService {
 
         return repository.findAll(page)
             .toList();
+    }
+
+    @Override
+    public Customer getById(Long id) {
+        Customer customer = repository
+            .findById(id)
+            .orElseThrow(() -> new NotFoundException("Customer not found", "id"));
+        return customer;
     }
     
 }

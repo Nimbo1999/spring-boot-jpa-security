@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import io.github.nimbo1999.exceptions.NotFoundException;
 import io.github.nimbo1999.rest.ApiError;
 import io.github.nimbo1999.rest.FieldError;
 
@@ -61,6 +62,19 @@ public class CustomerControllerAdvice {
         return FieldError.builder()
             .field(key)
             .messages(errorMap.get(key))
+            .build();
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiError handleNotFoundException(NotFoundException ex) {
+        return ApiError.builder()
+            .errors(Arrays.asList(
+                FieldError.builder()
+                .field(ex.getField())
+                .messages(Arrays.asList(ex.getMessage()))
+                .build())
+            )
             .build();
     }
 
