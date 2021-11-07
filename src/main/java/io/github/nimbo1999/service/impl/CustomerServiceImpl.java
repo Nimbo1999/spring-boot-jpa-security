@@ -120,4 +120,25 @@ public class CustomerServiceImpl implements CustomerService {
 
         return repository.save(newCustomerData);
     }
+
+    @Override
+    public void deleteCustomerById(Long id) {
+        Customer customer = repository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Customer not found!", "id"));
+
+        try {
+            customer.getPhones()
+                .forEach(phone -> phoneNumberRepository.delete(phone));
+
+            customer.getEmails()
+                .forEach(email -> emailRepository.delete(email));
+
+            repository.delete(customer);
+        } catch (Exception ex) {
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
+            System.out.println(ex.getMessage());
+        }
+    }
 }

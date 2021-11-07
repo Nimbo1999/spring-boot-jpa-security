@@ -11,4 +11,5 @@ public interface CustomerService {
     public List<Customer> listCustomers(PageParamsDTO pageParams);
     public Customer getById(Long id);
     public Customer updateCustomer(Long id, CustomerDTO customer);
+    public void deleteCustomerById(Long id);
 }
