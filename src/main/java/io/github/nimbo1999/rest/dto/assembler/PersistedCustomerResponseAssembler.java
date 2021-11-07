@@ -35,6 +35,7 @@ public class PersistedCustomerResponseAssembler implements Function<Customer, Pe
 
     private PersistedCustomerAddressDTO getAddress(Address address) {
         return PersistedCustomerAddressDTO.builder()
+            .id(address.getId())
             .postalCode(StringUtils.getStringMask(address.getPostalCode(), MaskType.POSTALCODE))
             .publicPlace(address.getPublicPlace())
             .neighborhood(address.getNeighborhood())
@@ -56,6 +57,7 @@ public class PersistedCustomerResponseAssembler implements Function<Customer, Pe
             : MaskType.RESIDENTIAL_PHONE;
 
         return PersistedCustomerPhoneNumbersDTO.builder()
+            .id(phoneNumber.getId())
             .number(StringUtils.getStringMask(phoneNumber.getNumber(), maskType))
             .type(phoneNumber.getType().name())
             .build();
@@ -68,7 +70,7 @@ public class PersistedCustomerResponseAssembler implements Function<Customer, Pe
     }
 
     private PersistedCustomerEmailsDTO convertEmail(Email email) {
-        return new PersistedCustomerEmailsDTO(email.getEmail());
+        return new PersistedCustomerEmailsDTO(email.getId(), email.getEmail());
     }
 
 }

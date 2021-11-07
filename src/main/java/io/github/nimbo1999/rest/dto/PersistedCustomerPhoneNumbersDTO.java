@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersistedCustomerPhoneNumbersDTO {
+    private Long id;
     private String number;
     private String type;
 }

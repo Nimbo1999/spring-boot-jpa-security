@@ -10,15 +10,16 @@ import io.github.nimbo1999.rest.dto.EmailDTO;
 public class EmailAssembler implements Function<List<EmailDTO>, List<Email>> {
  
     @Override
-    public List<Email> apply(List<EmailDTO> createEmailDTO) {
-        return createEmailDTO.stream()
+    public List<Email> apply(List<EmailDTO> EmailDTOList) {
+        return EmailDTOList.stream()
             .map(emailDTO -> convert(emailDTO))
             .collect(Collectors.toList());
     }
 
-    private Email convert(EmailDTO createEmailDTO) {
+    private Email convert(EmailDTO EmailDTO) {
         return Email.builder()
-            .email(createEmailDTO.getEmail())
+            .id(EmailDTO.getId())
+            .email(EmailDTO.getEmail())
             .build();
     }
 

@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -50,10 +51,22 @@ public class CustomerController {
     }
 
     @GetMapping("{id}")
+    @ResponseStatus(code = HttpStatus.OK)
     public PersistedCustomerResponseDTO getCustomerById(@PathVariable Long id) {
         Customer persistedCustomer = service.getById(id);
         return new PersistedCustomerResponseAssembler()
             .apply(persistedCustomer);
+    }
+
+    @PutMapping("{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public PersistedCustomerResponseDTO updateCustomer(
+        @PathVariable Long id,
+        @RequestBody @Valid CustomerDTO customerDto
+    ) {
+        Customer updatedCustomer = service.updateCustomer(id, customerDto);
+        return new PersistedCustomerResponseAssembler()
+            .apply(updatedCustomer);
     }
 
 }

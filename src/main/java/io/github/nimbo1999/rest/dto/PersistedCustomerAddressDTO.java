@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersistedCustomerAddressDTO {
+    private Long id;
     private String postalCode;
     private String publicPlace;
     private String neighborhood;

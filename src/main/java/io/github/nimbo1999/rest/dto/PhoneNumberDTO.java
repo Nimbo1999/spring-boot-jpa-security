@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PhoneNumberDTO {
+    private Long id;
+
     @NotEmpty(message = "Phone number it is required")
     @NotInValidPhoneNumber
     private String number;

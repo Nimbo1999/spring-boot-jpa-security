@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmailDTO {
+    private Long id;
+
     @Email(message = "invalid customer e-mail")
     private String email;
 }

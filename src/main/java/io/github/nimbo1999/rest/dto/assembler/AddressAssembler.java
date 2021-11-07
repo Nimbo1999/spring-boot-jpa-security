@@ -9,16 +9,17 @@ import io.github.nimbo1999.utils.StringUtils;
 public class AddressAssembler implements Function<AddressDTO, Address> {
 
     @Override
-    public Address apply(AddressDTO createAddressDTO) {
-        String formattedPostalCode = StringUtils.removeNonDigits(createAddressDTO.getPostalCode());
+    public Address apply(AddressDTO addressDTO) {
+        String formattedPostalCode = StringUtils.removeNonDigits(addressDTO.getPostalCode());
 
         return Address.builder()
+            .id(addressDTO.getId())
             .postalCode(formattedPostalCode)
-            .publicPlace(createAddressDTO.getPublicPlace())
-            .neighborhood(createAddressDTO.getNeighborhood())
-            .city(createAddressDTO.getCity())
-            .federativeUnit(createAddressDTO.getUf())
-            .complement(createAddressDTO.getComplement())
+            .publicPlace(addressDTO.getPublicPlace())
+            .neighborhood(addressDTO.getNeighborhood())
+            .city(addressDTO.getCity())
+            .federativeUnit(addressDTO.getUf())
+            .complement(addressDTO.getComplement())
             .build();
     }
     

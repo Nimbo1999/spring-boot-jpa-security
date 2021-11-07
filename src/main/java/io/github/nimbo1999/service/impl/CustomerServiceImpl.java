@@ -92,4 +92,32 @@ public class CustomerServiceImpl implements CustomerService {
         return customer;
     }
     
+    @Override
+    @Transactional
+    public Customer updateCustomer(Long id, CustomerDTO customerDto) {
+        customerDto.setId(id);
+        Customer newCustomerData = new CustomerAssembler().apply(customerDto);
+
+        newCustomerData.setPhones(
+            newCustomerData.getPhones()
+                .stream()
+                .map(phone -> {
+                    phone.setCustomer(newCustomerData);
+                    return phoneNumberRepository.save(phone);
+                })
+                .collect(Collectors.toList())
+        );
+
+        newCustomerData.setEmails(
+            newCustomerData.getEmails()
+                .stream()
+                .map(email -> {
+                    email.setCustomer(newCustomerData);
+                    return emailRepository.save(email);
+                })
+                .collect(Collectors.toList())
+        );
+
+        return repository.save(newCustomerData);
+    }
 }

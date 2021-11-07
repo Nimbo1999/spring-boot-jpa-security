@@ -18,6 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerDTO {
+    private Long id;
+
     @Pattern(regexp = "[\\p{L}0-9 ]+", flags = Pattern.Flag.DOTALL, message = "Customer name must have only Alphanumeric characters")
     @Size(min = 3, max = 100, message = "Customer name must have between 3 and 100 letters")
     @NotEmpty(message = "Customer name it is required")

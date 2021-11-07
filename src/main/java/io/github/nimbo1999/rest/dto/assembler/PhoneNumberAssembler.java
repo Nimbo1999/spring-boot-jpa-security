@@ -11,18 +11,19 @@ import io.github.nimbo1999.utils.StringUtils;
 public class PhoneNumberAssembler implements Function<List<PhoneNumberDTO>, List<PhoneNumber>> {
 
     @Override
-    public List<PhoneNumber> apply(List<PhoneNumberDTO> createPhoneNumberDTO) {
-        return createPhoneNumberDTO.stream()
+    public List<PhoneNumber> apply(List<PhoneNumberDTO> phoneNumberDTOList) {
+        return phoneNumberDTOList.stream()
             .map(phoneDTO -> convert(phoneDTO))
             .collect(Collectors.toList());
     }
 
-    private PhoneNumber convert(PhoneNumberDTO createPhoneNumberDTO) {
-        String formattedPhoneNumber = StringUtils.removeNonDigits(createPhoneNumberDTO.getNumber());
+    private PhoneNumber convert(PhoneNumberDTO phoneNumberDTO) {
+        String formattedPhoneNumber = StringUtils.removeNonDigits(phoneNumberDTO.getNumber());
 
         return PhoneNumber.builder()
+            .id(phoneNumberDTO.getId())
             .number(formattedPhoneNumber)
-            .type(createPhoneNumberDTO.getType())
+            .type(phoneNumberDTO.getType())
             .build();
     }
     

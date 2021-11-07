@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressDTO {
+    private Long id;
+
     @NotEmpty(message = "Address postalcode it is required")
     private String postalCode;
 
