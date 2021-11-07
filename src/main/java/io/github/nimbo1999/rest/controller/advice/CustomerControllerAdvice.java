@@ -59,7 +59,7 @@ public class CustomerControllerAdvice {
 
     private FieldError buildFieldError(String key, HashMap<String, List<String>> errorMap) {
         return FieldError.builder()
-            .name(key)
+            .field(key)
             .messages(errorMap.get(key))
             .build();
     }

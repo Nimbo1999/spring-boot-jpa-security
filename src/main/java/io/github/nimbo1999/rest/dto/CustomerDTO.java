@@ -2,7 +2,9 @@ package io.github.nimbo1999.rest.dto;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -24,7 +26,16 @@ public class CustomerDTO {
     @CPF(message = "Customer cpf it is invalid")
     @NotEmpty(message = "Customer cpf it is required")
     private String cpf;
+
+    @Valid
+    @NotNull(message = "Customer Address it is required")
     private AddressDTO address;
+
+    @Valid
+    @NotEmpty(message = "At least 1 phone number it is required")
     private List<PhoneNumberDTO> phones;
+
+    @Valid
+    @NotEmpty(message = "At least 1 email it is required")
     private List<EmailDTO> emails;
 }

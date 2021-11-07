@@ -4,8 +4,9 @@ import java.util.List;
 
 import io.github.nimbo1999.domain.entity.Customer;
 import io.github.nimbo1999.rest.dto.CustomerDTO;
+import io.github.nimbo1999.rest.dto.PageParamsDTO;
 
 public interface CustomerService {
     public Customer saveCustomer(CustomerDTO customer);
-    public List<Customer> listCustomers();
+    public List<Customer> listCustomers(PageParamsDTO pageParams);
 }

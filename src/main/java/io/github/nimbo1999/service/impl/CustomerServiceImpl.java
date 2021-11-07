@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import io.github.nimbo1999.domain.entity.Customer;
@@ -14,6 +17,7 @@ import io.github.nimbo1999.domain.repository.CustomerRepository;
 import io.github.nimbo1999.domain.repository.PhoneNumberRepository;
 import io.github.nimbo1999.domain.repository.EmailRepository;
 import io.github.nimbo1999.rest.dto.CustomerDTO;
+import io.github.nimbo1999.rest.dto.PageParamsDTO;
 import io.github.nimbo1999.rest.dto.assembler.CustomerAssembler;
 import io.github.nimbo1999.rest.dto.assembler.PhoneNumberAssembler;
 import io.github.nimbo1999.rest.dto.assembler.EmailAssembler;
@@ -68,8 +72,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> listCustomers() {
-        return repository.findAll();
+    public List<Customer> listCustomers(PageParamsDTO pageParams) {
+        Pageable page = PageRequest.of(
+            pageParams.getPage(),
+            pageParams.getSize(),
+            Sort.by(pageParams.getSortBy())
+        );
+
+        return repository.findAll(page)
+            .toList();
     }
     
 }

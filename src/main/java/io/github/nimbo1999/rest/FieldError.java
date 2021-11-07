@@ -8,7 +8,7 @@ import lombok.Getter;
 @Builder
 public class FieldError {
     @Getter
-    public String name;
+    public String field;
     @Getter
     public List<String> messages;
 }

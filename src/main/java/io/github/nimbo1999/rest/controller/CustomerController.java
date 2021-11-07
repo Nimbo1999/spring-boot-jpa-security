@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.nimbo1999.domain.entity.Customer;
 import io.github.nimbo1999.rest.dto.CustomerDTO;
+import io.github.nimbo1999.rest.dto.PageParamsDTO;
 import io.github.nimbo1999.rest.dto.PersistedCustomerResponseDTO;
 import io.github.nimbo1999.rest.dto.assembler.PersistedCustomerResponseAssembler;
 import io.github.nimbo1999.rest.dto.assembler.PersistedCustomerListResponseAssembler;
@@ -41,8 +42,8 @@ public class CustomerController {
 
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public List<PersistedCustomerResponseDTO> getCustomerList() {
-        List<Customer> customerList = service.listCustomers();
+    public List<PersistedCustomerResponseDTO> getCustomerList(PageParamsDTO pageParams) {
+        List<Customer> customerList = service.listCustomers(pageParams);
         return new PersistedCustomerListResponseAssembler()
           .apply(customerList);
     }
