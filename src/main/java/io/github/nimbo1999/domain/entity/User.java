@@ -1,13 +1,15 @@
 package io.github.nimbo1999.domain.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -30,7 +32,12 @@ public class User {
     @Column
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Roles> roles;
+    @ManyToMany
+    @JoinTable(
+        name = "users_roles",
+        joinColumns = { @JoinColumn(name = "user_id") },
+        inverseJoinColumns = { @JoinColumn(name = "role_id") }
+    )
+    private List<Roles> roles;
 
 }
