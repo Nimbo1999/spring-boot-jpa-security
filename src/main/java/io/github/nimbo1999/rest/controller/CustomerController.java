@@ -2,6 +2,8 @@ package io.github.nimbo1999.rest.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +33,7 @@ public class CustomerController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public PersistedCustomerResponseDTO saveCustomer(@RequestBody CustomerDTO createCustomerDTO) {
+    public PersistedCustomerResponseDTO saveCustomer(@RequestBody @Valid CustomerDTO createCustomerDTO) {
         Customer persistedCustomer = service.saveCustomer(createCustomerDTO);
         return new PersistedCustomerResponseAssembler()
             .apply(persistedCustomer);
