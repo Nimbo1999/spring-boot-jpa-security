@@ -12,26 +12,28 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import io.github.nimbo1999.domain.enums.RoleType;
+import io.github.nimbo1999.domain.enums.AuthorityType;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "roles")
-public class Roles {
+@Table(name = "authorities")
+public class Authority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
+    @Getter
     @Enumerated(EnumType.STRING)
     @Column
-    private RoleType role;
+    private AuthorityType authority;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "authorities")
     private List<User> users;
 
 }

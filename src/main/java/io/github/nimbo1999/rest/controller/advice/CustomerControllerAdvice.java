@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import io.github.nimbo1999.exceptions.NotFoundException;
 import io.github.nimbo1999.rest.ApiError;
 import io.github.nimbo1999.rest.FieldError;
+import io.github.nimbo1999.rest.UnauthorizedError;
 
 @RestControllerAdvice
 public class CustomerControllerAdvice {
@@ -75,6 +77,15 @@ public class CustomerControllerAdvice {
                 .messages(Arrays.asList(ex.getMessage()))
                 .build())
             )
+            .build();
+    }
+
+    @ExceptionHandler(AuthorizationServiceException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public UnauthorizedError handleUnauthorizedError(AuthorizationServiceException ex) {
+        return UnauthorizedError.builder()
+            .status(HttpStatus.UNAUTHORIZED.value())
+            .message(ex.getMessage())
             .build();
     }
 

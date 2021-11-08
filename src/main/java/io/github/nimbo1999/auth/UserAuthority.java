@@ -2,14 +2,13 @@ package io.github.nimbo1999.auth;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
 public class UserAuthority implements GrantedAuthority {
 
-    private String authority;
+    private final String authority;
+
+    public UserAuthority(String authority) {
+        this.authority = authority;
+    }
 
     @Override
     public String getAuthority() {
