@@ -14,3 +14,8 @@ CREATE DATABASE challenge OWNER postgres;<br><br>
 ## Docker
 
 ```docker run --name postgres-c -p 5432:5432 -e POSTGRES_PASSWORD=$CHALLENGE_POSTGRES_PASSWORD -d postgres```
+
+# Informações úteis
+## CORS
+
+O servidor está permitindo apenas requisições vindas de http://localhost:3000.
