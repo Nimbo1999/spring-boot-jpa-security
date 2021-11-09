@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Builder
-public class ApiError {
+public class ApiFormError {
     @Getter
     public List<FieldError> errors;
 }

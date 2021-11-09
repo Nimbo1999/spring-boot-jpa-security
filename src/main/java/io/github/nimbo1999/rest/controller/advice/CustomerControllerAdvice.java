@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import io.github.nimbo1999.exceptions.NotFoundException;
-import io.github.nimbo1999.rest.ApiError;
+import io.github.nimbo1999.rest.ApiFormError;
 import io.github.nimbo1999.rest.FieldError;
-import io.github.nimbo1999.rest.UnauthorizedError;
+import io.github.nimbo1999.rest.ApiErrorRespose;
 
 @RestControllerAdvice
 public class CustomerControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        List<FieldError> errors = new ArrayList<>();
+    public ApiErrorRespose handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        List<FieldError> formErrors = new ArrayList<>();
         HashMap<String, List<String>> errorsMapper = new HashMap<>();
 
         ex.getFieldErrors().forEach(err -> {
@@ -46,11 +46,16 @@ public class CustomerControllerAdvice {
         });
 
         errorsMapper.keySet().forEach(key -> {
-            errors.add(buildFieldError(key, errorsMapper));
+            formErrors.add(buildFieldError(key, errorsMapper));
         });
 
-        return ApiError.builder()
-            .errors(errors)
+        ApiFormError errors = ApiFormError.builder()
+            .errors(formErrors)
+            .build();
+
+        return ApiErrorRespose.builder()
+            .status(HttpStatus.BAD_REQUEST.value())
+            .content(errors)
             .build();
     }
 
@@ -69,8 +74,8 @@ public class CustomerControllerAdvice {
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiError handleNotFoundException(NotFoundException ex) {
-        return ApiError.builder()
+    public ApiErrorRespose handleNotFoundException(NotFoundException ex) {
+        ApiFormError errors = ApiFormError.builder()
             .errors(Arrays.asList(
                 FieldError.builder()
                 .field(ex.getField())
@@ -78,14 +83,19 @@ public class CustomerControllerAdvice {
                 .build())
             )
             .build();
+
+        return ApiErrorRespose.builder()
+            .status(HttpStatus.NOT_FOUND.value())
+            .content(errors)
+            .build();
     }
 
     @ExceptionHandler(AuthorizationServiceException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public UnauthorizedError handleUnauthorizedError(AuthorizationServiceException ex) {
-        return UnauthorizedError.builder()
+    public ApiErrorRespose handleUnauthorizedError(AuthorizationServiceException ex) {
+        return ApiErrorRespose.builder()
             .status(HttpStatus.UNAUTHORIZED.value())
-            .message(ex.getMessage())
+            .content(ex.getMessage())
             .build();
     }
 
