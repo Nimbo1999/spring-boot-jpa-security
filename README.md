@@ -3,6 +3,7 @@
 ## Configurando o projeto rodando um shell script:
 
 Necessário possuir o docker instalado na sua máquina, já que vamos utiliza-lo para o projeto.<br>
+O script foi testado nos SO Windows(Com o git bash) e no Mac OS terminal padrâo.<br>
 
 O script vai exportar as variáveis de ambiente necessárias, fazer o build da imagem, montar e rodar o container
 do postgres.<br>
