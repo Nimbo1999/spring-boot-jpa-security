@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class AuthenticateRequestDTO {
-    @NotEmpty(message = "username it is required")
+    @NotEmpty(message = "O nome do usuário é obrigatório")
     private String username;
-    @NotEmpty(message = "password it is required")
+    @NotEmpty(message = "É obrigatório informar a senha de acesso")
     private String password;
 }
