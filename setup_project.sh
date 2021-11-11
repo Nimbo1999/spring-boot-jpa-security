@@ -11,4 +11,4 @@ export CHALLENGE_POSTGRES_USERNAME=postgres
 export CHALLENGE_POSTGRES_PASSWORD=dev1234#
 export CHALLENGE_JWT_SECRET=dGhpcyBpcyB0aGUgc2VjcmV0IDop
 
-docker image build . -t postgres-db && docker run --name postgres-db -p 5432:5432 -e POSTGRES_PASSWORD=$CHALLENGE_POSTGRES_PASSWORD -d postgres-db
+docker image build . -t postgres-db && docker run --name postgres-db -p 5432:5432 -e POSTGRES_PASSWORD=$CHALLENGE_POSTGRES_PASSWORD -d postgres-db && mvn package -Dmaven.test.skip && cd target && java -jar nimbo1999-0.0.1-SNAPSHOT.jar
