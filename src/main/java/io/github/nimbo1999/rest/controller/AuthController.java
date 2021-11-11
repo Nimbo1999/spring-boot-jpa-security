@@ -47,4 +47,5 @@ public class AuthController {
             throw new AuthorizationServiceException("Username or Password incorrect");
         }
     }
+
 }

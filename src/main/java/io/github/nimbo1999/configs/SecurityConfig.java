@@ -53,6 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/customer/**")
                     .hasAnyAuthority(AuthorityType.ALL.name(), AuthorityType.READ.name())
+                .antMatchers(HttpMethod.GET, "/user")
+                    .hasAnyAuthority(AuthorityType.ALL.name(), AuthorityType.READ.name())
                 .antMatchers("/customer/**")
                     .hasAnyAuthority(AuthorityType.ALL.name())
                 .antMatchers(HttpMethod.POST, "/auth/**")
@@ -67,14 +69,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(corsFilter());
     }
 
-    @Bean
     public CorsFilter corsFilter() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration()
             .applyPermitDefaultValues();
 
         config.setAllowCredentials(true);
-        config.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000"));
+        config.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000", "*"));
         config.addAllowedMethod(HttpMethod.GET);
         config.addAllowedMethod(HttpMethod.HEAD);
         config.addAllowedMethod(HttpMethod.OPTIONS);
