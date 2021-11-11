@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.nimbo1999.domain.entity.Customer;
+import io.github.nimbo1999.rest.dto.CustomerCountDTO;
 import io.github.nimbo1999.rest.dto.CustomerDTO;
 import io.github.nimbo1999.rest.dto.PageParamsDTO;
 import io.github.nimbo1999.rest.dto.PersistedCustomerResponseDTO;
@@ -74,6 +75,12 @@ public class CustomerController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteCustomerById(@PathVariable Long id) {
         service.deleteCustomerById(id);
+    }
+
+    @GetMapping("/count")
+    @ResponseStatus(code = HttpStatus.OK)
+    public CustomerCountDTO getCustomerCount() {
+        return new CustomerCountDTO(service.customerCount());
     }
 
 }

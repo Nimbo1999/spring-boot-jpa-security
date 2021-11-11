@@ -137,4 +137,9 @@ public class CustomerServiceImpl implements CustomerService {
         } catch (Exception ex) {
         }
     }
+
+    @Override
+    public Long customerCount() {
+        return repository.count();
+    }
 }

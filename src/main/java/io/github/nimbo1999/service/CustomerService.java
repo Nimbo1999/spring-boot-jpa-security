@@ -12,4 +12,5 @@ public interface CustomerService {
     public Customer getById(Long id);
     public Customer updateCustomer(Long id, CustomerDTO customer);
     public void deleteCustomerById(Long id);
+    public Long customerCount();
 }
