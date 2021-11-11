@@ -135,10 +135,6 @@ public class CustomerServiceImpl implements CustomerService {
 
             repository.delete(customer);
         } catch (Exception ex) {
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println(ex.getMessage());
         }
     }
 }

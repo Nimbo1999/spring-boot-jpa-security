@@ -37,8 +37,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String[] splitedAuthorizationHeader = authorizationHeader.split(" ");
             String jwtToken = splitedAuthorizationHeader[1];
 
-            System.out.println(jwtToken);
-
             if (jwtService.isValidToken(jwtToken)) {
                 UserDetail userDetail = getUserDetailsFromJwt(jwtToken);
                 setSecurityContextAuthorization(userDetail);
